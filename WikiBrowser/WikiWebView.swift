@@ -10,16 +10,27 @@ import UIKit
 
 class WikiWebView: UIView, UIWebViewDelegate {
     
+    private var webView:UIWebView
+    
     private let wikiCollection:WikipediaCollection
-    private let webView:UIWebView
+    private let urlParser = URLParser()
     
     init(frame fr: CGRect, collection c: WikipediaCollection) {
         wikiCollection = c
-        webView = UIWebView(frame: fr)
+        webView = c.activePage.webView
         super.init(frame: fr)
         
+        reloadActivePage()
+        
+    }
+    
+    public func reloadActivePage() {
+        
+        subviews.forEach({ $0.removeFromSuperview() })
+        
+        webView = wikiCollection.activePage.webView
         webView.delegate = self
-        webView.loadRequest(URLRequest(url: c.activePage.url))
+        webView.frame = frame
         
         addSubview(webView)
     }
@@ -31,14 +42,12 @@ class WikiWebView: UIView, UIWebViewDelegate {
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let url = request.url {
             print(url.absoluteString)
-            if(url.absoluteString == wikiCollection.rootPage.url.absoluteString) {
-                return true
-            } else {
+            if(urlParser.IsAWikiArticle(url: url)) {
                 wikiCollection.AddSubpage(url: url)
                 return false
             }
         }
-        return false
+        return true
     }
     
     required init?(coder aDecoder: NSCoder) {

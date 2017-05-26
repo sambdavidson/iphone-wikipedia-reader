@@ -15,6 +15,10 @@
 		4E282A0E1EA87AD500264FA5 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E282A0D1EA87AD500264FA5 /* HttpService.swift */; };
 		4E282A101EA88D2500264FA5 /* WikipediaCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E282A0F1EA88D2500264FA5 /* WikipediaCollection.swift */; };
 		4E282A121EA88E9F00264FA5 /* Wikipage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E282A111EA88E9F00264FA5 /* Wikipage.swift */; };
+		4EAD6F151EB1B014003267E7 /* WikiQueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAD6F141EB1B014003267E7 /* WikiQueueViewController.swift */; };
+		4EDD566B1EB1BEC500DC6944 /* URLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDD566A1EB1BEC500DC6944 /* URLParser.swift */; };
+		4EDD566D1EB1D87100DC6944 /* WikiQueueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDD566C1EB1D87100DC6944 /* WikiQueueCell.swift */; };
+		4EDD566F1EB1D8D700DC6944 /* WikiQueueTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDD566E1EB1D8D700DC6944 /* WikiQueueTable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		4E282A0D1EA87AD500264FA5 /* HttpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		4E282A0F1EA88D2500264FA5 /* WikipediaCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaCollection.swift; sourceTree = "<group>"; };
 		4E282A111EA88E9F00264FA5 /* Wikipage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wikipage.swift; sourceTree = "<group>"; };
+		4EAD6F141EB1B014003267E7 /* WikiQueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiQueueViewController.swift; sourceTree = "<group>"; };
+		4EDD566A1EB1BEC500DC6944 /* URLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLParser.swift; path = ../URLParser.swift; sourceTree = "<group>"; };
+		4EDD566C1EB1D87100DC6944 /* WikiQueueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiQueueCell.swift; sourceTree = "<group>"; };
+		4EDD566E1EB1D8D700DC6944 /* WikiQueueTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiQueueTable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,16 +69,36 @@
 		4E2829FA1EA8729A00264FA5 /* WikiBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				4EAD6F131EB1AFE7003267E7 /* QueueView */,
+				4EAD6F121EB1AFCA003267E7 /* WebView */,
 				4E2829FB1EA8729A00264FA5 /* AppDelegate.swift */,
-				4E2829FD1EA8729A00264FA5 /* WikiViewController.swift */,
 				4E282A021EA8729A00264FA5 /* Assets.xcassets */,
 				4E282A071EA8729A00264FA5 /* Info.plist */,
 				4E282A0D1EA87AD500264FA5 /* HttpService.swift */,
 				4E282A0F1EA88D2500264FA5 /* WikipediaCollection.swift */,
 				4E282A111EA88E9F00264FA5 /* Wikipage.swift */,
-				4E00C2871EB06A670069C613 /* WikiWebView.swift */,
+				4EDD566A1EB1BEC500DC6944 /* URLParser.swift */,
 			);
 			path = WikiBrowser;
+			sourceTree = "<group>";
+		};
+		4EAD6F121EB1AFCA003267E7 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				4E00C2871EB06A670069C613 /* WikiWebView.swift */,
+				4E2829FD1EA8729A00264FA5 /* WikiViewController.swift */,
+			);
+			name = WebView;
+			sourceTree = "<group>";
+		};
+		4EAD6F131EB1AFE7003267E7 /* QueueView */ = {
+			isa = PBXGroup;
+			children = (
+				4EAD6F141EB1B014003267E7 /* WikiQueueViewController.swift */,
+				4EDD566C1EB1D87100DC6944 /* WikiQueueCell.swift */,
+				4EDD566E1EB1D8D700DC6944 /* WikiQueueTable.swift */,
+			);
+			name = QueueView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,8 +172,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EDD566D1EB1D87100DC6944 /* WikiQueueCell.swift in Sources */,
 				4E2829FE1EA8729A00264FA5 /* WikiViewController.swift in Sources */,
+				4EDD566F1EB1D8D700DC6944 /* WikiQueueTable.swift in Sources */,
 				4E282A121EA88E9F00264FA5 /* Wikipage.swift in Sources */,
+				4EDD566B1EB1BEC500DC6944 /* URLParser.swift in Sources */,
+				4EAD6F151EB1B014003267E7 /* WikiQueueViewController.swift in Sources */,
 				4E2829FC1EA8729A00264FA5 /* AppDelegate.swift in Sources */,
 				4E282A0E1EA87AD500264FA5 /* HttpService.swift in Sources */,
 				4E282A101EA88D2500264FA5 /* WikipediaCollection.swift in Sources */,

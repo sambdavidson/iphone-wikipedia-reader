@@ -13,12 +13,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    private let wikiCollection = WikipediaCollection()
+    private var navCtrl:UINavigationController?
+    private var webView:WikiViewController?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
         
-        window?.rootViewController = WikiViewController();
+        navCtrl = UINavigationController()
+        webView = WikiViewController()
+        
+        navCtrl?.viewControllers = [webView!]
+        
+        window?.rootViewController = navCtrl!
         window?.makeKeyAndVisible()
+        
         
         application.isStatusBarHidden = true
         
