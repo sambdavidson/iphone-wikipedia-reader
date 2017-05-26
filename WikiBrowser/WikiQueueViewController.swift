@@ -18,10 +18,17 @@ class WikiQueueViewController: UIViewController {
         super.viewDidLoad()
         
         _wikiTable = WikiQueueTable(frame: view.frame, wikiCollection: wikiCollection!)
+    
+        wikiCollection!.RegisterOnActivePageChange(self.onActivePageChange)
+    
+        navigationItem.title = "Article Queue"
         
         view.addSubview(_wikiTable!)
     }
     
+    public func onActivePageChange(_ p:Wikipage?) {
+        _ = navigationController?.popToRootViewController(animated: true)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

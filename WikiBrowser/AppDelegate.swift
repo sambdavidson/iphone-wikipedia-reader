@@ -21,7 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         
         navCtrl = UINavigationController()
+        navCtrl?.automaticallyAdjustsScrollViewInsets = false
         webView = WikiViewController()
+        webView?.automaticallyAdjustsScrollViewInsets = false
         
         navCtrl?.viewControllers = [webView!]
         

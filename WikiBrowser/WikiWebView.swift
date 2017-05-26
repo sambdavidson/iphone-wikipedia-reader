@@ -20,23 +20,28 @@ class WikiWebView: UIView, UIWebViewDelegate {
         webView = c.activePage.webView
         super.init(frame: fr)
         
+        wikiCollection.RegisterOnActivePageChange(self.onActivePageChange)
+        
         reloadActivePage()
         
     }
     
+    public func onActivePageChange(_ p:Wikipage?) {
+        reloadActivePage()
+    }
+    
     public func reloadActivePage() {
+        
         
         subviews.forEach({ $0.removeFromSuperview() })
         
         webView = wikiCollection.activePage.webView
         webView.delegate = self
+
         webView.frame = frame
+        webView.scrollView.contentInset = .init(top: 44, left: 0, bottom: 0, right: 0)
         
         addSubview(webView)
-    }
-    
-    public func setWikiPage(_ page:Wikipage) {
-        webView.loadRequest(URLRequest(url: page.url))
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {

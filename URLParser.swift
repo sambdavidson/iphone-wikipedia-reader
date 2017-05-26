@@ -9,15 +9,24 @@
 import UIKit
 
 class URLParser {
-    private let urlPrefix = "https://en.m.wikipedia.org/wiki/"
-    private let mainPrefix = "https://en.m.wikipedia.org/wiki/Main_Page"
+
+    public var urlPrefix:String {
+        return _urlPrefix
+    }
+    
+    private let _urlPrefix = "https://en.m.wikipedia.org/wiki/"
+    private let _mainPrefix = "https://en.m.wikipedia.org/wiki/Main_Page"
     
     public func IsAWikiArticle(url:URL)->Bool {
         let s = url.absoluteString
         
-        if s.hasPrefix(urlPrefix) && !s.hasPrefix(mainPrefix) {
-            return true
+        if s.hasPrefix(_urlPrefix) && !s.hasPrefix(_mainPrefix) {
+            let s_no_prefix = s.replacingOccurrences(of: _urlPrefix, with: "")
+            if !s_no_prefix.contains("#") && !s_no_prefix.contains(":") {
+                return true
+            }
         }
+        
         return false
     }
     
