@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E00C2841EB05FD70069C613 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E00C2831EB05FD60069C613 /* Default-568h@2x.png */; };
+		4E00C2881EB06A670069C613 /* WikiWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E00C2871EB06A670069C613 /* WikiWebView.swift */; };
 		4E2829FC1EA8729A00264FA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2829FB1EA8729A00264FA5 /* AppDelegate.swift */; };
-		4E2829FE1EA8729A00264FA5 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2829FD1EA8729A00264FA5 /* RootViewController.swift */; };
+		4E2829FE1EA8729A00264FA5 /* WikiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2829FD1EA8729A00264FA5 /* WikiViewController.swift */; };
 		4E282A031EA8729A00264FA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E282A021EA8729A00264FA5 /* Assets.xcassets */; };
 		4E282A0E1EA87AD500264FA5 /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E282A0D1EA87AD500264FA5 /* HttpService.swift */; };
 		4E282A101EA88D2500264FA5 /* WikipediaCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E282A0F1EA88D2500264FA5 /* WikipediaCollection.swift */; };
@@ -16,9 +18,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E00C2831EB05FD60069C613 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4E00C2871EB06A670069C613 /* WikiWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiWebView.swift; sourceTree = "<group>"; };
 		4E2829F81EA8729A00264FA5 /* WikiBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WikiBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E2829FB1EA8729A00264FA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4E2829FD1EA8729A00264FA5 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		4E2829FD1EA8729A00264FA5 /* WikiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiViewController.swift; sourceTree = "<group>"; };
 		4E282A021EA8729A00264FA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E282A071EA8729A00264FA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E282A0D1EA87AD500264FA5 /* HttpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
@@ -40,6 +44,7 @@
 		4E2829EF1EA8729900264FA5 = {
 			isa = PBXGroup;
 			children = (
+				4E00C2831EB05FD60069C613 /* Default-568h@2x.png */,
 				4E2829FA1EA8729A00264FA5 /* WikiBrowser */,
 				4E2829F91EA8729A00264FA5 /* Products */,
 			);
@@ -57,12 +62,13 @@
 			isa = PBXGroup;
 			children = (
 				4E2829FB1EA8729A00264FA5 /* AppDelegate.swift */,
-				4E2829FD1EA8729A00264FA5 /* RootViewController.swift */,
+				4E2829FD1EA8729A00264FA5 /* WikiViewController.swift */,
 				4E282A021EA8729A00264FA5 /* Assets.xcassets */,
 				4E282A071EA8729A00264FA5 /* Info.plist */,
 				4E282A0D1EA87AD500264FA5 /* HttpService.swift */,
 				4E282A0F1EA88D2500264FA5 /* WikipediaCollection.swift */,
 				4E282A111EA88E9F00264FA5 /* Wikipage.swift */,
+				4E00C2871EB06A670069C613 /* WikiWebView.swift */,
 			);
 			path = WikiBrowser;
 			sourceTree = "<group>";
@@ -127,6 +133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E282A031EA8729A00264FA5 /* Assets.xcassets in Resources */,
+				4E00C2841EB05FD70069C613 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,11 +144,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E2829FE1EA8729A00264FA5 /* RootViewController.swift in Sources */,
+				4E2829FE1EA8729A00264FA5 /* WikiViewController.swift in Sources */,
 				4E282A121EA88E9F00264FA5 /* Wikipage.swift in Sources */,
 				4E2829FC1EA8729A00264FA5 /* AppDelegate.swift in Sources */,
 				4E282A0E1EA87AD500264FA5 /* HttpService.swift in Sources */,
 				4E282A101EA88D2500264FA5 /* WikipediaCollection.swift in Sources */,
+				4E00C2881EB06A670069C613 /* WikiWebView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +292,7 @@
 				4E282A0C1EA8729A00264FA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
