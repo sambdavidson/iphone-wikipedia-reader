@@ -7,11 +7,12 @@
 //
 import UIKit
 
-class Wikipage {
+class Wikipage: NSObject, UIWebViewDelegate {
     
     public weak var parent:Wikipage?
     public var url:URL
     public var webView:UIWebView
+    public var locked = false
     
     public var articleName:String {
         return _articleName
@@ -26,7 +27,7 @@ class Wikipage {
     }
     
     public var loaded:Bool {
-        return !webView.isLoading
+        return _loaded
     }
     
     public var depth:Int {
@@ -51,10 +52,12 @@ class Wikipage {
     private var _unviewed:Bool = true
     private var _articleName:String
     private var _urlParser:URLParser = URLParser()
+    private var _loaded:Bool = false
+    private var _parentCollection:WikipediaCollection?
     
-    init(url u:URL) {
-        
+    init(url u:URL, collection c:WikipediaCollection?) {
         url = u
+        _parentCollection = c
         
         let postfix = u.absoluteString.replacingOccurrences(of: _urlParser.urlPrefix, with: "").replacingOccurrences(of: "_", with: " ")
         
@@ -68,6 +71,9 @@ class Wikipage {
         let offset = books.characters.count
         let index = books.index(books.startIndex, offsetBy: abs(_articleName.hash) % offset)
         _bookFlair = books[index]
+        
+        super.init()
+        webView.delegate = self
     }
 
     public func addChild(_ c:Wikipage) {
@@ -149,6 +155,30 @@ class Wikipage {
             }
         }
         return nil
+    }
+    
+    public func GetDataForSaving()->NSDictionary {
+        var dict = Dictionary<String,Any>()
+        
+        for child in _children {
+            dict[child.url.absoluteString] = child.GetDataForSaving()
+        }
+        
+        return (dict as NSDictionary)
+    }
+    
+    public func LoadDataFromSave(_ d: NSDictionary) {
+        for (name, children) in (d as! Dictionary<String,NSDictionary>) {
+            let p = Wikipage(url: URL(string: name)!, collection: _parentCollection)
+            p.parent = self
+            p.LoadDataFromSave(children)
+            _children.append(p)
+        }
+    }
+    
+    func webViewDidFinishLoad(_ webView : UIWebView) {
+        _loaded = true
+        _parentCollection?.WikiPageUpdated(self)
     }
     
 }

@@ -9,10 +9,11 @@
 import UIKit
 
 class WikiQueueCell: UITableViewCell {
+
+    public weak var wikipage:Wikipage?
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

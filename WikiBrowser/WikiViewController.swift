@@ -16,10 +16,10 @@ class WikiViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         wikiCollection.RegisterOnPageAdded(self.onCollectionUpdated)
         wikiCollection.RegisterOnPageRemoved(self.onCollectionUpdated)
         wikiCollection.RegisterOnActivePageChange(self.onCollectionUpdated)
+        wikiCollection.RegisterOnPageUpdated(self.onCollectionUpdated)
         
         webView = WikiWebView(frame: view.frame, collection: wikiCollection)
         
@@ -73,6 +73,9 @@ class WikiViewController: UIViewController {
                     }
                 }
                 articleName = "Next \(dirFlair) \(name)"
+            } else if wikiCollection.activePage.locked {
+                navigationItem.leftBarButtonItem?.isEnabled = false
+                articleName = "Locked"
             } else {
                 articleName = "Done"
             }
@@ -87,7 +90,13 @@ class WikiViewController: UIViewController {
             navigationItem.leftBarButtonItem?.title = "Choose Next"
             navigationItem.rightBarButtonItem?.title = "Article Queue"
         }
+        webView?.reloadActivePage()
         
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        webView?.updateFrame(view.frame, navBarFrame: navigationController!.navigationBar.bounds)
     }
 
     override func didReceiveMemoryWarning() {

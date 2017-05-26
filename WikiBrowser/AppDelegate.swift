@@ -18,19 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var webView:WikiViewController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         window = UIWindow()
+        
+        print("\nMESSAGE FROM SAM:\nThe below error about PLBuildVersion is ok, it is just a warning. I have looked it up and it is because UIWebView uses multiple libraries that share class names. It seems there is no way to hide this, but it isn't anything to worry about.\n")
         
         navCtrl = UINavigationController()
         navCtrl?.automaticallyAdjustsScrollViewInsets = false
         webView = WikiViewController()
         webView?.automaticallyAdjustsScrollViewInsets = false
-        
         navCtrl?.viewControllers = [webView!]
         
         window?.rootViewController = navCtrl!
         window?.makeKeyAndVisible()
-        
-        
+                
         application.isStatusBarHidden = true
         
         return true

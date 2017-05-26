@@ -26,6 +26,13 @@ class WikiQueueViewController: UIViewController {
         view.addSubview(_wikiTable!)
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        _wikiTable?.updateFrame(view.frame)
+    }
+
+    
     public func onActivePageChange(_ p:Wikipage?) {
         _ = navigationController?.popToRootViewController(animated: true)
     }

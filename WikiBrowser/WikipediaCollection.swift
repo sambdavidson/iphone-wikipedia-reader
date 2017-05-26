@@ -18,6 +18,7 @@ class WikipediaCollection {
     private var _OnActivePageChange:[(_ page:Wikipage?)->Void] = []
     private var _OnPageRemoved:[(_ page:Wikipage?)->Void] = []
     private var _OnPageLoaded:[(_ page:Wikipage?)->Void] = []
+    private var _OnPageUpdated:[(_ page:Wikipage?)->Void] = []
     
     public var count: Int {
         var c = 0;
@@ -42,11 +43,12 @@ class WikipediaCollection {
     }
     
     init() {
-        root = Wikipage(url: URL(string: "https://en.m.wikipedia.org/wiki/Main_Page")!)
+        root = Wikipage(url: URL(string: "https://en.m.wikipedia.org/wiki/Main_Page")!, collection: nil)
+        load()
     }
     
 
-    public func SetActivePage(page:Wikipage) {
+    public func SetActive(page:Wikipage) {
         active = page
         
         page.markViewed()
@@ -56,9 +58,17 @@ class WikipediaCollection {
         }
     }
     
+    public func ToggleLockingOf(page:Wikipage) {
+        page.locked = !page.locked
+        for cb in _OnPageUpdated {
+            cb(active)
+        }
+        
+    }
+    
     public func AddSubpage(url:URL) {
         
-        let newPage = Wikipage(url: url)
+        let newPage = Wikipage(url: url,collection: self)
         
         for head in heads {
             if head.containsArticle(name: newPage.articleName) {
@@ -74,6 +84,7 @@ class WikipediaCollection {
         for cb in _OnPageAdded {
             cb(newPage)
         }
+        save()
     }
     
     public func NextPage() {
@@ -83,7 +94,12 @@ class WikipediaCollection {
                 active = ap.children.first
             } else { //No chilren, delete self and move on
                 if let parent = ap.parent { // Do we at least have a parent to go to
+                    
                     parent.removeImmediateChild(ap)
+                    if ap.locked {
+                        heads.append(ap)
+                    }
+                    
                     if parent.children.count > 0 { // Siblings?
                         parent.children.first?.markViewed()
                         active = parent.children.first
@@ -92,9 +108,13 @@ class WikipediaCollection {
                         active = parent
                     }
                 } else { // We are an orphan :'(
+    
                     let hIdx = heads.index(where: { $0.articleName == ap.articleName })
                     if let i = hIdx {
                         _ = heads.remove(at: i)
+                        if ap.locked {
+                            heads.append(ap) /* Put us back on the list */
+                        }
                     }
                     
                     if heads.count > 0 { //Anything left?
@@ -108,7 +128,7 @@ class WikipediaCollection {
             for cb in _OnActivePageChange {
                 cb(nil)
             }
-            
+            save()
             return
             
         } else if heads.count > 0 {
@@ -163,11 +183,14 @@ class WikipediaCollection {
     
     public func RemovePage(wiki:Wikipage) {
         
+        print("Delete: \(wiki.articleName)")
+        
         var newHeads:[Wikipage] = []
         
         if let a = active {
             if a.articleName == wiki.articleName {
-                active = nil //TODO double check this does what I want!
+                let (next, _) = GetWhatsNext()
+                active = next//TODO double check this does what I want!
             }
         }
         
@@ -196,6 +219,13 @@ class WikipediaCollection {
         for cb in _OnPageRemoved {
             cb(wiki)
         }
+        save()
+    }
+    
+    public func WikiPageUpdated(_ p:Wikipage?) {
+        for cb in _OnPageUpdated {
+            cb(p)
+        }
     }
     
     public func RegisterOnPageAdded(_ f:@escaping (_ page:Wikipage?)->Void) {
@@ -210,6 +240,30 @@ class WikipediaCollection {
     }
     public func RegisterOnPageLoaded(_ f:@escaping (_ page:Wikipage?)->Void) {
         _OnPageLoaded.append(f)
+    }
+    public func RegisterOnPageUpdated(_ f:@escaping (_ page:Wikipage?)->Void) {
+        _OnPageUpdated.append(f)
+    }
+
+    public func save() {
+        var nsHeads = Dictionary<String,NSDictionary>()
+        
+        for head in heads {
+            nsHeads[head.url.absoluteString] = head.GetDataForSaving()
+        }
+        
+        _ = (nsHeads as NSDictionary).write(toFile: NSHomeDirectory() + "/Documents/wikiReaderSave.plist", atomically: true)
+        
+    }
+    
+    private func load() {
+        if let nsHeads = NSDictionary(contentsOfFile: NSHomeDirectory() + "/Documents/wikiReaderSave.plist") {
+            for (name, children) in (nsHeads as! Dictionary<String,NSDictionary>) {
+                let p = Wikipage(url: URL(string: name)!, collection: self)
+                p.LoadDataFromSave(children)
+                heads.append(p)
+            }
+        }
     }
     
     public enum WikiQueueDirection {

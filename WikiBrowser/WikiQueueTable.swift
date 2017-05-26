@@ -26,9 +26,31 @@ class WikiQueueTable: UIView, UITableViewDelegate, UITableViewDataSource {
         _wikiCollection.RegisterOnPageAdded(self.onCollectionUpdated)
         _wikiCollection.RegisterOnPageRemoved(self.onCollectionUpdated)
         _wikiCollection.RegisterOnActivePageChange(self.onCollectionUpdated)
+        _wikiCollection.RegisterOnPageUpdated(self.onCollectionUpdated)
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
+        _tableView.addGestureRecognizer(longPressRecognizer)
         
         addSubview(_tableView)
         
+    }
+    
+    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == .began {
+            let rowIndex = _tableView.indexPathForRow(at: longPressGestureRecognizer.location(in: _tableView))
+            if let r = rowIndex {
+                let cell:WikiQueueCell = _tableView.cellForRow(at: r) as! WikiQueueCell
+                if let p = cell.wikipage {
+                    _wikiCollection.ToggleLockingOf(page: p)
+                }
+            }
+        }
+        
+    }
+    
+    public func updateFrame(_ f:CGRect) {
+        frame = f
+        _tableView.frame = f
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,6 +66,7 @@ class WikiQueueTable: UIView, UITableViewDelegate, UITableViewDataSource {
         cell.indentationWidth = 15.0
         
         if let p = wikiPage {
+            cell.wikipage = p
             cell.indentationLevel = min(p.depth, 15)
             if p.articleName == _wikiCollection.activePage.articleName {
                 cell.backgroundColor = UIColor(red: 0, green: 122.0/255, blue: 1.0, alpha: 1.0)
@@ -52,9 +75,11 @@ class WikiQueueTable: UIView, UITableViewDelegate, UITableViewDataSource {
                 cell.backgroundColor = UIColor.white
                 cell.textLabel?.textColor = UIColor(red: 0, green: 122.0/255, blue: 1.0, alpha: 1.0)
             }
-            if p.webView.isLoading {
+            if !p.loaded {
                 cell.textLabel?.textColor = UIColor.lightGray
                 cell.textLabel?.text = "⏳\(p.articleName)"
+            } else if p.locked {
+                cell.textLabel?.text = "🔒\(p.articleName)"
             } else if p.unviewed {
                 cell.textLabel?.text = "\(p.bookFlair)\(p.articleName)"
             } else {
@@ -89,10 +114,10 @@ class WikiQueueTable: UIView, UITableViewDelegate, UITableViewDataSource {
         
         let wikiPage = _wikiCollection.GetPageAtOffset(indexPath.row)
         
-        print("\(wikiPage?.articleName)")
-        
-        if let p =  wikiPage {
-            _wikiCollection.SetActivePage(page: p)
+        if let p = wikiPage {
+            if p.loaded {
+                _wikiCollection.SetActive(page: p)
+            }
         }
     }
     

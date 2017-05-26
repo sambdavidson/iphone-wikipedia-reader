@@ -14,6 +14,7 @@ class WikiWebView: UIView, UIWebViewDelegate {
     
     private let wikiCollection:WikipediaCollection
     private let urlParser = URLParser()
+    private var inset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
     
     init(frame fr: CGRect, collection c: WikipediaCollection) {
         wikiCollection = c
@@ -21,7 +22,6 @@ class WikiWebView: UIView, UIWebViewDelegate {
         super.init(frame: fr)
         
         wikiCollection.RegisterOnActivePageChange(self.onActivePageChange)
-        
         reloadActivePage()
         
     }
@@ -35,15 +35,25 @@ class WikiWebView: UIView, UIWebViewDelegate {
         
         subviews.forEach({ $0.removeFromSuperview() })
         
+        webView.delegate = nil
+        
         webView = wikiCollection.activePage.webView
         webView.delegate = self
 
         webView.frame = frame
-        webView.scrollView.contentInset = .init(top: 44, left: 0, bottom: 0, right: 0)
+        webView.scrollView.contentInset = inset
         
         addSubview(webView)
     }
     
+    func updateFrame(_ f:CGRect, navBarFrame: CGRect) {
+        frame = f
+        inset = UIEdgeInsets(top: navBarFrame.height, left: 0, bottom: 0, right: 0)
+        reloadActivePage()
+    }
+    
+    
+    /* Web View delegate handler */
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let url = request.url {
             print(url.absoluteString)
