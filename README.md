@@ -1,5 +1,5 @@
 # iPhone Wikipedia Reader!
-### A mobile wikipedia reader that aims to solve the annoyances of browsing wikipedia on mobile. 
+### A mobile Wikipedia reader that aims to solve the annoyances of browsing Wikipedia on mobile. 
 ##### *Created as part of my final project for CS 4530 Mobile App Development (iOS) at the University of Utah*
 
 ### Rationale 
@@ -10,3 +10,7 @@ I have built a mobile Wikipedia browser where instead of immediatly following li
 ### Screenshots
 
 **TODO**
+
+### Videos
+
+#### [Recording of Typical App Use](https://youtu.be/odCOLLxlNBI)
